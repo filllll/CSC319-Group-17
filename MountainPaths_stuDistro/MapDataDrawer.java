@@ -1,21 +1,39 @@
 import java.util.*;
 import java.io.*;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Collections;
 
 public class MapDataDrawer
 {
 
   private int[][] grid;
 
-  public MapDataDrawer(String filename, int rows, int cols){
+  public MapDataDrawer(String filename, int rows, int cols)throws IOException{
       // initialize grid 
       //read the data from the file into the grid
-      
+      grid = new int[rows][cols];
+        scanIn(filename, grid);
   }
+   public void scanIn(String filename, int[][] grid) throws FileNotFoundException, IOException {
+        try (Scanner read = new Scanner(new File(filename))) {
+            int i = 0, j = 0;
+            while(i != grid.length) {
+                grid[i][j++] = Integer.parseInt(read.next());
+                if (j == grid[0].length) {
+                    i++;
+                    j = 0;
+                }
+            }
+     
+        }
+        /**
+     * @return the min value in the entire grid
+     */
+    }
   
-  /**
-   * @return the min value in the entire grid
-   */
+  
   public int findMinValue(){
     return -1;    
   }
