@@ -35,14 +35,32 @@ public class MapDataDrawer
   
   
   public int findMinValue(){
-    return -1;    
+      public int findMinValue() {
+          int min = grid[0][0];
+          for(int x = 0; x < grid.length; x++) {
+              for (int y = 0; y < grid[0].length; y++) {
+                  if(grid[x][y] < min){
+                      min = grid[x][y];
+                  }
+              }
+          }
+          return min;
   }
   /**
    * @return the max value in the entire grid
    */
-  public int findMaxValue(){
-      return -1;
-  }
+    public int findMaxValue() {
+        int max = grid[0][0];
+        for(int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid[0].length; y++) {
+                if(grid[x][y] > max){
+                    max = grid[x][y];
+                }
+            }
+        }
+        return max;
+
+    }
   
   /**
    * @param col the column of the grid to check
