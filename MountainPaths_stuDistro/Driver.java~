@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.io.IOException;
-//"C:\\Users\\OMG\\Desktop\\MP\\mountainPaths_distro\\Colorado_844x480.dat" -------> location
+//"C:\\Users\\OMG\\Desktop\\CS\\CSC JAVA2\\mountainPaths_distro\\__mountainPaths_distro\\Colorado_844x480.dat"
 public class Driver
 {
     
