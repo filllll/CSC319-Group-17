@@ -90,36 +90,37 @@ public class MapDataDrawer {
     int mx = findMaxValue();
     for(int b =0; b < grid[0].length ; b++){
       for(int y = 0; y < grid.length; y++){
-        int w = (grid[y][b] - mn) / ((mx-mn)/255);
+        int w = (grid[y][b] - mn) / ((mx-mn)/255); // make the shade of color.
         g.setColor(new Color(w, w, w));
-        g.fillRect(b, y, 1, 1);
+        g.fillRect(b, y, 1, 1); // paint
       }
     }
   }
-  public int greedyPath( int top, int mid, int down ,int numb) {
-    int topOne = Math.abs(numb - top);
-    int midOne = Math.abs(numb - mid);
-    int downOne = Math.abs(numb - down);
-    int sum = 0;
-    int mn;
-    mn = Math.min(Math.min(topOne, midOne), downOne);
-    if (mn == midOne) {
-      sum = mid;
-    } else if (mn == topOne && mn != downOne) {
-      sum = top;
-    } else if (mn == downOne && mn != topOne) {   
-      sum = down;
-    } else if (mn == topOne && mn == downOne) {
-      int x = (int)(Math.random() * 100);
-      if (x < 50){
-        sum = top;
-      }else{
-        sum = down;
-      }
+ public int greedyPath(int numb, int top, int mid, int down) {
+        int sum = 0;
+        int topgReed = Math.abs(numb - top);
+        int midgReed = Math.abs(numb - mid);
+        int downgReed = Math.abs(numb - down);
+        int mn;
+        mn = Math.min(Math.min(topgReed, midgReed), downgReed);
+        if (mn == midgReed) {
+            sum = mid;
+        } else if (mn == topgReed && mn != downgReed) {// top line
+            sum = top;
+            
+        } else if (mn == downgReed && mn != topgReed) {//down  line 
+            sum = down;
+        } else if (mn == topgReed && mn == downgReed) { // if mid equal randon for go top or down
+            int x = (int) (Math.random() * 100);
+            if (x < 50) {
+                sum = top;
+            } else {
+                sum = down;
+            }
+        }
+        return sum;
+
     }
-    return sum;
-    
-  }
   /**
      * Find a path from West-to-East starting at given row. Choose a foward step
      * out of 3 possible forward locations, using greedy method described in
@@ -127,37 +128,40 @@ public class MapDataDrawer {
      *
      * @return the total change in elevation traveled from West-to-East
      */
-  public int drawLowestElevPath(Graphics g, int row){
-    int mid, top ,down;
-    g.fillRect(0, row, 1, 1);
-    int numb = grid[row][0];
-    int minNumb;
-    int chg = 0;
-    for(int k =1; k < grid[0].length; k++){
-      if(row==0){
-        mid = grid[row][k];
-        down = grid[row + 1][k];
-        top = 999999;
-      }else if (row == grid.length -1){
-        mid = grid[row][k];
-        top = grid[row-1][k];
-        down = 999999;
-      }else{
-        mid = grid[row][k];
-        top = grid[row- 1][k];
-        down = grid[row + 1][k];
-      }
-      minNumb = greedyPath(numb, top, mid, down);
-      chg += Math.abs(numb-minNumb);
-      if(top == minNumb){
-        row = row - 1;
-      }else if (down == minNumb){
-        row = row +1;
-      }
-      numb = grid[row][k];
-      g.fillRect(k, row, 1, 1);
-    }
-    return chg;
+  public int drawLowestElevPath(Graphics g, int row){ // for draw  the green line.
+    // best ways to walk.
+    int mid, top, down;
+        g.fillRect(0, row, 1, 1);
+        int num = grid[row][0];
+        int minNumber;
+        int change = 0;
+        for (int y = 1; y < grid[0].length; y++) {
+            if(row == 0) {
+                mid = grid[row][y];
+                down = grid[row + 1][y];
+                top = 999999;
+            } else if (row == grid.length - 1) { 
+                mid = grid[row][y];
+                top = grid[row - 1][y];
+                down = 999999;
+            } else{
+                mid = grid[row][y];
+                top = grid[row - 1][y];
+                down = grid[row + 1][y];
+            }
+            minNumber = greedyPath(num, top, mid, down);
+            change += Math.abs(num-minNumber);
+            if(top == minNumber) {
+                row = row - 1;
+            }else if (down == minNumber) {
+                row = row + 1;
+            }
+            num = grid[row][y];
+            g.fillRect(y, row, 1, 1);
+
+        }
+
+        return change;
   }
   
   /**
